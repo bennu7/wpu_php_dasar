@@ -41,7 +41,7 @@ if (isset($_POST["submit"])) {
 
     <a href="index.php">Kembali ke main page</a>
 
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <ul>
             <li>
                 <label for="nim">NIM : </label>
@@ -65,7 +65,7 @@ if (isset($_POST["submit"])) {
             </li>
 
             <li>
-                <button type="text" name="submit">Tambah Data</button>
+                <button type="file" name="submit">Tambah Data</button>
             </li>
 
 
