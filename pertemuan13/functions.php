@@ -82,10 +82,20 @@ function upload()
     }
 
     // lolos pengecekan, gambar siap diupload
-    move_uploaded_file($tmpName, 'img/' . $namaFile);
+    // generate nama gambar baru => menghindari gambar duplikat dengan nama file sama & ekstensi sama
+    // dengan memanfaatkan function uniqid()
+    // .= digabung
+    $namaFileBaru = uniqid();
+    $namaFileBaru .= '.';
+    $namaFileBaru .= $ekstensiGambar;
+
+    // var_dump($namaFileBaru);
+    // die;
+
+    move_uploaded_file($tmpName, 'img/' . $namaFileBaru);
 
     // jika sudah berhasil
-    return $namaFile;
+    return $namaFileBaru;
 }
 
 
