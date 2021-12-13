@@ -23,13 +23,69 @@ function tambah($data)
     $nama = htmlspecialchars($data["nama"]);
     $email = htmlspecialchars($data["email"]);
     $jurusan = htmlspecialchars($data["jurusan"]);
-    $gambar = htmlspecialchars($data["gambar"]);
+
+    // $gambar = htmlspecialchars($data["gambar"]);
+    // khusus upload gambar
+    $gambar = upload();
+    if (!$gambar) {
+        return false;
+    }
 
     $query = "INSERT INTO mahasiswa VALUES
             ('', '$nama', '$nim', '$email', '$jurusan', '$gambar')";
     mysqli_query($conn, $query);
 
     return mysqli_affected_rows($conn);
+}
+
+function upload()
+{
+    //$_FILES[][]=>array multi dimensi
+    $namaFile = $_FILES["gambar"]['name'];
+    $ukuranFile = $_FILES["gambar"]["size"];
+    $error = $_FILES["gambar"]["error"];
+    $tmpName = $_FILES["gambar"]["tmp_name"];
+
+    // cek apakah tidak ada gambar yg diupload
+    if ($error === 4) {
+        echo "<script>
+            alert('Pilih gambar telebih dahulu!')
+        </script>";
+        return false; //setelah berhenti hentikan function nya
+    }
+
+    // cek apakah yang di upload itu adalah gambar
+    $ekstensiGambarValid = ['jpg', 'png', 'jpeg'];
+
+    // exploe => fungsi untuk memecah sebuah string menjadi array
+    $ekstensiGambar = explode('.', $namaFile);
+
+    //menghindari nama misal lalu.ibnu.jpg yg dibaca format gambar nya ibnu bukan jpg
+    // menghindai case sensitive misal JGP dan jpg => gunakan fungsi strtolower()
+    $ekstensiGambar = strtolower(end($ekstensiGambar));
+
+    // memeriksa ekstensi yg diupload terdapat pada $ekstensiGambarValid
+    if (!in_array($ekstensiGambar, $ekstensiGambarValid)) {
+        echo "<script>
+                alert('Gambar ekstensi tidak valid!/File yang diupload bukan gambar')
+            </script>";
+        return false;
+    }
+
+    // cek jika ukurannya terlalu besar
+    $mega = 1000000; //dalam satuan byte
+    if ($ukuranFile >   1 * $mega) {
+        echo "<script>
+                alert('Ukuran gambar terlalu besar melebihi 1mb')
+            </script>";
+        return false;
+    }
+
+    // lolos pengecekan, gambar siap diupload
+    move_uploaded_file($tmpName, 'img/' . $namaFile);
+
+    // jika sudah berhasil
+    return $namaFile;
 }
 
 
