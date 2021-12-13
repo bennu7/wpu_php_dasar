@@ -166,6 +166,21 @@ function registrasi($data)
     $password = mysqli_real_escape_string($conn, $data["password"]);
     $password2 = mysqli_real_escape_string($conn, $data["password2"]);
 
+    // cek username sudah ada atau belum
+    $resultUsername = mysqli_query($conn, "SELECT username FROM user WHERE 
+                    username = '$username'
+                    ");
+    // var_dump(mysqli_fetch_assoc($resultUsername));
+    // die;
+
+    if (mysqli_fetch_assoc($resultUsername)) {
+        echo "<script>
+            alert('username telah ada. silahkan gunakan username lainnya');
+        </script>";
+        return false;
+    }
+
+
     // cek konfirmasi password
     if ($password !== $password2) {
         echo "<script>
