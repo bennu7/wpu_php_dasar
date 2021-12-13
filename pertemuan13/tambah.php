@@ -65,7 +65,7 @@ if (isset($_POST["submit"])) {
             </li>
 
             <li>
-                <button type="submit" name="submit">Tambah Data</button>
+                <button type="text" name="submit">Tambah Data</button>
             </li>
 
 
