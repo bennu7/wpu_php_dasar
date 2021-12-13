@@ -4,7 +4,7 @@ require 'functions.php';
 if (isset($_POST['registrasi'])) {
     if (registrasi($_POST) > 0) {
         echo "<script>
-                alert('data berhasil diregistrasi');
+                alert('data user baru berhasil diregistrasi');
                 </script>";
     } else {
         mysqli_error($conn);
