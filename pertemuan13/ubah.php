@@ -50,8 +50,10 @@ if (isset($_POST["submit"])) {
 
     <a href="index.php">Kembali ke main page</a>
 
-    <form action="" method="post">
-        <input type="hidden" name="id" value="<?= $mhs["id"]; ?>">//tambahkan id sebagai identitas untuk update dan hidden
+    <form action="" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="id" value="<?= $mhs["id"]; ?>">
+        <input type="hidden" name="gambarLama" value="<?= $mhs["gambar"]; ?>">
         <ul>
             <li>
                 <label for="nim">NIM : </label>
@@ -70,8 +72,9 @@ if (isset($_POST["submit"])) {
                 <input type="text" name="jurusan" id="jurusan" value="<?= $mhs["jurusan"]; ?>">
             </li>
             <li>
-                <label for="gambar">Gambar : </label>
-                <input type="text" name="gambar" id="gambar" value="<?= $mhs["gambar"]; ?>">
+                <label for="gambar">Gambar : </label><br>
+                <img src="img/<?= $mhs['gambar'] ?>" , width="100px"><br>
+                <input type="file" name="gambar" id="gambar">
             </li>
 
             <li>
