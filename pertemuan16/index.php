@@ -1,5 +1,12 @@
 <?php
+session_start();
+if (!$_SESSION["login"]) {
+    header("Location: login.php");
+    exit;
+}
+
 require 'functions.php';
+
 
 $mahasiswa =  query("SELECT * FROM mahasiswa");
 
@@ -28,6 +35,8 @@ if (isset($_POST["cari"])) {
     <a href="tambah.php">Tambah data mahasiswa</a>
     <br>
     <a href="index.php">Refresh</a>
+    <br>
+    <a href="logout.php">Logout</a>
     <br><br>
 
     <form action="" method="POST">

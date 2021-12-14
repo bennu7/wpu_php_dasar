@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require 'functions.php';
 
@@ -9,53 +10,22 @@ if (isset($_POST["login"])) {
 
     $query = "SELECT * FROM user WHERE username='$username'";
 
-    // var_dump(mysqli_affected_rows($conn));
-    // die;
-
     $result = mysqli_query($conn, $query);
 
-    // var_dump(mysqli_num_rows($result));
-    // die;
-
     // cek username 
-    if (mysqli_num_rows($result) >= 1) {
-        // echo "<script>
-        //         alert('login username success');
-        //         document.location.href = 'index.php'
-        //         </script>";
-        // return true;
-
+    if (mysqli_num_rows($result) === 1) {
         // cek password dengan memanfaatkan password_verify untuk mengambil password yg telah di hash
         $row = mysqli_fetch_assoc($result);
-        // var_dump($row);
-        // die;
+
         if (password_verify($password, $row["password"])) {
-            // echo "<script>
-            //     alert('login Username & password success');
-            //     document.location.href = 'index.php'
-            //     </script>";
+            // TODO: set session sebelum menuju index.php
+            $_SESSION["login"] = true;
+
             header("Location: index.php");
-            // return true;
             exit;
         }
-
-        // else {
-        //     echo "<script>
-        //         alert('login password failed');
-        //         document.location.href = 'login.php'
-        //         </script>";
-        //     return false;
-        // }
     }
     $error = true;
-    // else if (mysqli_num_rows($result) < 1) {
-    //     echo "<script>
-    //             alert('login username failed');
-    //             document.location.href = 'login.php'
-    //             </script>";
-    //     return false;
-    // }
-
 }
 
 ?>
