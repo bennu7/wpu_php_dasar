@@ -26,6 +26,8 @@ if (isset($_POST["cari"])) {
 <body>
     <h1>Daftar Mahasiswa</h1>
     <a href="tambah.php">Tambah data mahasiswa</a>
+    <br>
+    <a href="index.php">Refresh</a>
     <br><br>
 
     <form action="" method="POST">
