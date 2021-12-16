@@ -1,12 +1,40 @@
 <?php
 session_start();
 
+require 'functions.php';
+
+// cek cookie
+// if (isset($_COOKIE['login'])) {
+//     // jika masih dalam kondisi cookie hidup, maka cek value nya dari cookie tersebut
+//     if ($_COOKIE['login'] == 'masihDalamTimer') {
+//         // membuat session dengan waktu timer 60 detik yang telah dibuat sebelumnya
+//         $_SESSION['login'] = true;
+//     }
+// }
+
+// cara lebih aman cookie agar tidak mudah dimanipulasi
+if (isset($_COOKIE['id']) && isset($_COOKIE['key'])) {
+    $id = $_COOKIE['id'];
+    $key = $_COOKIE['key'];
+
+    // ambil username berdasarkan id
+    $result = mysqli_query($conn, "SELECT username FROM user WHERE id=$id");
+    // mendapatkan username yang telah dipilih
+    $row = mysqli_fetch_assoc($result);
+
+    // cek cookie dan username
+    if ($key === hash('sha256', $row['username'])) {
+        $_SESSION['login'] = true;
+    }
+}
+
 if (isset($_SESSION["login"])) {
     header("Location: index.php");
     exit;
 }
 
-require 'functions.php';
+
+
 
 if (isset($_POST["login"])) {
 
@@ -23,8 +51,18 @@ if (isset($_POST["login"])) {
         $row = mysqli_fetch_assoc($result);
 
         if (password_verify($password, $row["password"])) {
-            // TODO: set session sebelum menuju index.php
+            //  set session sebelum menuju index.php
             $_SESSION["login"] = true;
+
+            // jikalu berhasil lakukan cookie remember me
+            if (isset($_POST["remember"])) {
+                // buat cookie
+                //setcookie('login', 'masihDalamTimer', time() + 60);
+
+                // cara lebih aman cookie agar tidak mudah dimanipulasi
+                setcookie('id', $row['id'], time() + 60);
+                setcookie('key', hash('sha256', $row['username']), time() + 60);
+            }
 
             header("Location: index.php");
             exit;
@@ -60,6 +98,10 @@ if (isset($_POST["login"])) {
             <li>
                 <label for="password">Password : </label>
                 <input type="password" id="password" name="password">
+            </li>
+            <li>
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">remember me </label>
             </li>
             <li>
                 <button type="submit" name="login">Login</button>
