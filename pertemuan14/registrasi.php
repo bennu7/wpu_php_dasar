@@ -6,6 +6,7 @@ if (isset($_POST['registrasi'])) {
         echo "<script>
                 alert('data user baru berhasil diregistrasi');
                 </script>";
+        header("Location: index.php");
     } else {
         mysqli_error($conn);
     }
