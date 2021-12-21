@@ -1,4 +1,6 @@
 <?php
+// sleep(1);
+// usleep(500000);
 require '../functions.php';
 
 $keyword = $_GET['keyword'];
@@ -12,7 +14,6 @@ $query = "SELECT * FROM mahasiswa
 ";
 $mahasiswa = query($query);
 
-var_dump($mahasiswa);
 ?>
 
 <table border="1" cellpadding="10" cellspacing="0">

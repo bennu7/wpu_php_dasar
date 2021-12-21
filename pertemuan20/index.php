@@ -28,6 +28,17 @@ if (isset($_POST["cari"])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Page</title>
+    <style>
+        .loader {
+            width: 100px;
+            position: absolute;
+            top: 145px;
+            left: auto;
+            display: none;
+        }
+    </style>
+    <script src="js/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -42,6 +53,7 @@ if (isset($_POST["cari"])) {
     <form action="" method="POST">
         <input type="text" name="keyword" size="40" autofocus placeholder="masukkan keyword pencarian..." autocomplete="off" id="keyword">
         <button type="submit" name="cari" id="tombol-cari">Cari orang hilang</button>
+        <img src="img/loader.gif" width="100" class="loader">
     </form>
 
     <br>
@@ -76,6 +88,8 @@ if (isset($_POST["cari"])) {
             <?php endforeach ?>
         </table>
     </div>
+
+
     <script src="js/script.js"></script>
 </body>
 
